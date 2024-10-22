@@ -3,10 +3,10 @@ import argparse
 def init_arg():
     '''parse parameter from command line.'''
     
-    parser = argparse.ArgumentParser(prog='python3 easy.py', description='This is a cloud acl auto whitelist program.', epilog='Enjoy the tool. :) ')
+    parser = argparse.ArgumentParser(prog='easy', description='This is a cloud acl auto whitelist tool.', epilog='Enjoy the tool. :) ')
 
-    my_group = parser.add_mutually_exclusive_group(required=True)
-    my_group.add_argument('-t', '-T', '--tencent', action='store_true', help='tencent cloud')
+    my_group = parser.add_mutually_exclusive_group(required=False)
+    my_group.add_argument('-t', '-T', '--tencent', action='store_true', default=True, help='tencent cloud')
     my_group.add_argument('-a', '-A', '--alibaba', action='store_true', help='alibaba cloud')
     
     parser.add_argument('-p', '-P', '--proxy',  action='store', default=-1, type=int, help ='local HTTP proxy port')

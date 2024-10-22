@@ -32,5 +32,5 @@ Python3 is required
 ## 使用说明 Instructions
 
 ```shell
-$ python -m easy_whitelist -t template list
+$ easy template list
 ```
