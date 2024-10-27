@@ -8,8 +8,6 @@ currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+Please use https://github.com/qiqilelebaobao to report security vulnerabilities.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+The Security Team will process your report within a week, and respond within a month (although it will depend on the severity of your report).
