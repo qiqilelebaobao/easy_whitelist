@@ -29,7 +29,7 @@ Main functions include:
 需要 Python3 环境
 Python3 is required
 
-## 使用说明 Instructions
+## 使用说明 Basic Usage
 
 ```shell
 $ easy template list
