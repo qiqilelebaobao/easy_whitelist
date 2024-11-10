@@ -10,7 +10,7 @@ def get_local_ip_from_url_and_parse(u, patt, ag):
     headers = {'user-agent': ag}
     # print(f'user_agent:{ag}')
     try:
-        response = requests.get(u, headers=headers, timeout=60)
+        response = requests.get(u, headers=headers, timeout=5)
         # 获取响应内容
         respon = response.text
         l_ip = url.parse_ip_from_response(respon, patt)
