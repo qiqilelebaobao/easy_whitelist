@@ -48,6 +48,6 @@ def main():
         else:
             print('Wrong postion, shall not be here.')
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     main()
