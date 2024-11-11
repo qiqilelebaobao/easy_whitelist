@@ -31,12 +31,12 @@ Python3 is required
 
 ## 使用说明 Basic Usage
 
-1. 通过列表选择模版，设置白名单
+* 通过列表选择模版，设置白名单
 ```shell
 $ easy template list
 ```
 
-2. 通过新创建模版，设置白名单。需要指定关联的安全组ID
+* 通过新创建模版，设置白名单。需要指定关联的安全组ID
 ```shell
 $ easy template create rule_id
 ```
