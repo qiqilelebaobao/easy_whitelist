@@ -39,7 +39,7 @@ def list_template(common_client):
         # print(template_ids)
         addreset = ' ~ '.join(template['AddressSet'][:3])
         if len(template['AddressSet']) > 3:
-            addreset += f' ~~~{len(template["AddressSet"])-3} more...'
+            addreset += f' ~~~ {len(template["AddressSet"])-3} more...'
         print(f"{str(i):10}"
               f"{template['AddressTemplateId']:20}"
               f"{template['CreatedTime']:30}"

@@ -11,6 +11,7 @@ from easy_whitelist.config import arg
 from easy_whitelist.tcloud import client
 from easy_whitelist.tcloud.template import list_template, set_template, create_template
 
+
 def loop_list(common_client):
     template_ids = list_template(common_client)
     last_input = None
@@ -24,13 +25,15 @@ def loop_list(common_client):
                 if (a := int(input_from_user)) > 0 and a <= len(template_ids):
                     set_template(common_client, template_ids[a - 1])
                 else:
-                    print('Wrong #, please input # from list.')
+                    print('Wrong index, please input right index from the list.')
         elif input_from_user == 'l' or input_from_user == 'L':
             list_template(common_client)
         elif input_from_user == 'q' or input_from_user == 'Q':
             break
+        elif input_from_user == '':
+            continue
         else:
-            print('Input error...')
+            print('Input error.')
 
 def main():
     tencent, alibaba, action, target, target_id, proxy = arg.init_arg()
