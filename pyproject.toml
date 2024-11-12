@@ -33,7 +33,9 @@ maintainers = [
   {name = "qiqilelebaobao", email = "qiqilelebaobao@163.com"}
 ]
 
-keywords = ["automation", "whitelist", "acl", "security-groups", "alibaba-cloud", "tencent-cloud", "security-tools", "security-group-rule"]
+keywords = ["automation", "whitelist", "acl", 
+"security-groups", "alibaba-cloud", "tencent-cloud", 
+"security-tools", "security-group-rule"]
 
 [project.urls]
 Homepage = "https://github.com/qiqilelebaobao/easy_whitelist"
