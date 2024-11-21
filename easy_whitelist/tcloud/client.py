@@ -13,11 +13,11 @@ def get_common_client(proxy):
 
     httpProfile = HttpProfile()
     httpProfile.endpoint = "vpc.tencentcloudapi.com"
-    if proxy != -1:
-        httpProfile.proxy = f'127.0.0.1:{proxy}'
+    httpProfile.proxy = f'127.0.0.1:{proxy}' if proxy != -1 else None
     
     clientProfile = ClientProfile()
     clientProfile.httpProfile = httpProfile
+    # clientProfile.signMethod = 'HmacSHA256'
     
     common_client = CommonClient("vpc", "2017-03-12", cred, "ap-nanjing", profile=clientProfile)
     

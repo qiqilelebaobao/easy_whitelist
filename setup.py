@@ -19,7 +19,7 @@ setup(
     author_email='qiqilelebaobao@163.com',
     maintainer_email="qiqilelebaobao@163.com",
     version=easy_whitelist.__version__,
-    url='https://baidu.com',
+    url='https://github.com/qiqilelebaobao/easy_whitelist',
     scripts=[],
     license="Apache License 2.0",
     platforms='any',

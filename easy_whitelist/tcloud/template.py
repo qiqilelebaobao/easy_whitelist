@@ -15,8 +15,9 @@ def write_template_list_to_temp_file(template_ids):
 
 def get_template(common_client):
     try:
-        headers = {}
-        templates = common_client.call_json("DescribeAddressTemplates", headers)
+        params = {}
+        # templates = common_client.call_json("DescribeAddressTemplates", params, options = {'SkipSign': True})
+        templates = common_client.call_json("DescribeAddressTemplates", params, )
         return templates
 
     except TencentCloudSDKException as err:
