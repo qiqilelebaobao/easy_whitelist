@@ -7,12 +7,14 @@ from tencentcloud.common.common_client import CommonClient
 
 
 def get_common_client(proxy):
-    cred = credential.Credential(
-        os.environ.get("TENCENTCLOUD_SECRET_ID"),
-        os.environ.get("TENCENTCLOUD_SECRET_KEY"))
+    # cred = credential.Credential(
+    #     os.environ.get("TENCENTCLOUD_SECRET_ID"),
+    #     os.environ.get("TENCENTCLOUD_SECRET_KEY"))
+    
+    cred = credential.DefaultCredentialProvider().get_credential()
 
     httpProfile = HttpProfile()
-    httpProfile.endpoint = "vpc.tencentcloudapi.com"
+    # httpProfile.endpoint = "vpc.tencentcloudapi.com"
     httpProfile.proxy = f'127.0.0.1:{proxy}' if proxy != -1 else None
     
     clientProfile = ClientProfile()
