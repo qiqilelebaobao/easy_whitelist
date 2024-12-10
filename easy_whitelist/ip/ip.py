@@ -2,18 +2,34 @@ import requests
 import sys
 import random
 import re
+import time
 
 from . import url
 
-def get_local_ip_from_url_and_parse(u, patt, ag):
+def get_local_ip_from_url_and_parse(u, patt, ag, proxy=None):
     # 发送GET请求
     headers = {'user-agent': ag}
     # print(f'user_agent:{ag}')
     try:
-        response = requests.get(u, headers=headers, timeout=5)
+        print(time.ctime(), 'starting fetch local ip...', u)
+        if proxy:
+            response = requests.get(u, 
+                                    headers=headers,
+                                    timeout=(3,5),
+                                    proxies={"http": f"http://127.0.0.1:{proxy}", 
+                                            "https": f"http://127.0.0.1:{proxy}"
+                                            }
+                                    )
+        else:
+            response = requests.get(u,
+                                    headers=headers,
+                                    timeout=(3, 5)
+                                    )
+            
         # 获取响应内容
         respon = response.text
         l_ip = url.parse_ip_from_response(respon, patt)
+        print(time.ctime(), 'ending fetch local ip...', l_ip, u)
         return l_ip
     except Exception:
         return None
@@ -32,10 +48,11 @@ def validate_ip(l_ip):
     else:
         return False
 
-def get_local_ips():
+def get_local_ips(proxy=None):
     ip_list = []
+    print(time.ctime())
     for i, u in enumerate(url.detect_url, 1):
-        l_ip = get_local_ip_from_url_and_parse(u[0], u[1], u[2])
+        l_ip = get_local_ip_from_url_and_parse(u[0], u[1], u[2], proxy)
         if validate_ip(l_ip):
             ip_list.append(l_ip)
     return ip_list

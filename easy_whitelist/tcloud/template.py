@@ -1,6 +1,6 @@
 import json
 import random
-
+import sys
 
 from ..ip import ip
 from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentCloudSDKException
@@ -80,8 +80,8 @@ def modify_template_address(common_client, client_ips, target_id):
             return False
     except (TencentCloudSDKException, IndexError) as err:
         # IndexError catch when there is no match target.Example: 'AddressTemplateSet': []
-        print(f"{err=}, {type(err)=}, {respon=}")
-        return False
+        print(f"{err=}, {type(err)=}")
+        sys.exit(1)
 
     params = "{{\"AddressTemplateId\":\"{}\",{}}}".format(target_id, client_ips)
     try:
@@ -94,21 +94,21 @@ def modify_template_address(common_client, client_ips, target_id):
 
     return True
 
-def get_local_ip_and_format_addressesextra():
-        client_ip_list = ip.get_local_ips()
+def get_local_ip_and_format_addressesextra(proxy=None):
+        client_ip_list = ip.get_local_ips(proxy)
         # ip.print_ip_list(client_ip_list)
         client_ip_list = list(set(client_ip_list))
         addresses_extra = format_addres_extra_string_from_list(client_ip_list)
 
         return addresses_extra
     
-def set_template(common_client, target_id):
+def set_template(common_client, target_id, proxy=None):
     # with open('/tmp/template_0000.txt', 'r') as temp_file:
     #     data = json.load(temp_file)
     #     print(data)
     if target_id:
         if target_id.startswith('ipm-'):
-            addresses_extra = get_local_ip_and_format_addressesextra()
+            addresses_extra = get_local_ip_and_format_addressesextra(proxy)
             if modify_template_address(common_client, addresses_extra, target_id):
                 print(f'Successfully set {{{target_id}}} to {{{addresses_extra}}}')
         else:
@@ -116,7 +116,7 @@ def set_template(common_client, target_id):
     else:
         print('Set template shall input template id.')
 
-def create_template(common_client, rule_id):
+def create_template(common_client, rule_id, proxy=None):
     
     if not rule_id:
         print('Create template shall input security group id.')
@@ -138,7 +138,7 @@ def create_template(common_client, rule_id):
         print(f"{err=}, {type(err)=}")
         return False
 
-    addresses_extra = get_local_ip_and_format_addressesextra()
+    addresses_extra = get_local_ip_and_format_addressesextra(proxy)
     params = f"{{\"AddressTemplateName\":\"temp-open-{random.randint(1,9999):04d}\",{addresses_extra}}}"
     try:
         respon = common_client.call_json("CreateAddressTemplate", json.loads(params))

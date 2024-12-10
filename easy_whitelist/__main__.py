@@ -12,7 +12,7 @@ from easy_whitelist.tcloud import client
 from easy_whitelist.tcloud.template import list_template, set_template, create_template
 
 
-def loop_list(common_client):
+def loop_list(common_client, proxy=None):
     template_ids = list_template(common_client)
     last_input = None
     while True:
@@ -23,7 +23,7 @@ def loop_list(common_client):
         if input_from_user.isdigit():
             if template_ids:
                 if (a := int(input_from_user)) > 0 and a <= len(template_ids):
-                    set_template(common_client, template_ids[a - 1])
+                    set_template(common_client, template_ids[a - 1], proxy)
                 else:
                     print('Wrong index, please input right index from the list.')
         elif input_from_user == 'l' or input_from_user == 'L':
@@ -45,9 +45,9 @@ def main():
         if action == 'list':
             loop_list(common_client)
         elif action == 'set':
-             set_template(common_client, target_id)
+            set_template(common_client, target_id, proxy)
         elif action == 'create':
-            create_template(common_client, target_id)
+            create_template(common_client, target_id, proxy)
         else:
             print('Wrong postion, shall not be here.')
 
