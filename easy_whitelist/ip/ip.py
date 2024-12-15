@@ -11,27 +11,22 @@ def get_local_ip_from_url_and_parse(u, patt, ag, proxy=None):
     headers = {'user-agent': ag}
     # print(f'user_agent:{ag}')
     try:
-        print(time.ctime(), 'starting fetch local ip...', u)
+        print(time.ctime(), 'starting fetch local ip...', u, proxy)
         if proxy:
-            response = requests.get(u, 
-                                    headers=headers,
-                                    timeout=(3,5),
+            response = requests.get(u, headers=headers, timeout=(3,5),
                                     proxies={"http": f"http://127.0.0.1:{proxy}", 
                                             "https": f"http://127.0.0.1:{proxy}"
-                                            }
-                                    )
+                                            })
         else:
-            response = requests.get(u,
-                                    headers=headers,
-                                    timeout=(3, 5)
-                                    )
+            response = requests.get(u, headers=headers, timeout=(3, 5))
             
         # 获取响应内容
         respon = response.text
         l_ip = url.parse_ip_from_response(respon, patt)
         print(time.ctime(), 'ending fetch local ip...', l_ip, u)
         return l_ip
-    except Exception:
+    except Exception as e:
+        print(e)
         return None
 
 def validate_ip(l_ip):

@@ -15,7 +15,7 @@ def get_common_client(proxy):
 
     httpProfile = HttpProfile()
     # httpProfile.endpoint = "vpc.tencentcloudapi.com"
-    httpProfile.proxy = f'127.0.0.1:{proxy}' if proxy != -1 else None
+    httpProfile.proxy = f'127.0.0.1:{proxy}' if proxy else None
     
     clientProfile = ClientProfile()
     clientProfile.httpProfile = httpProfile

@@ -9,7 +9,7 @@ def init_arg():
     my_group.add_argument('-t', '-T', '--tencent', action='store_true', default=True, help='tencent cloud')
     my_group.add_argument('-a', '-A', '--alibaba', action='store_true', help='alibaba cloud')
     
-    parser.add_argument('-p', '-P', '--proxy',  action='store', default=-1, type=int, help ='local HTTP proxy port')
+    parser.add_argument('-p', '-P', '--proxy',  action='store', default=None, type=int, help ='local HTTP proxy port')
     
     parser.add_argument('target', help='template or rule_id', choices=['template', 'rule_id'])
     parser.add_argument('action', help='list', choices=['list', 'set', 'create'])
