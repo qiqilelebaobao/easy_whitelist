@@ -6,6 +6,7 @@ import os
 import pprint
 import string
 import sys
+import logging
 
 from easy_whitelist.config import arg
 from easy_whitelist.tcloud import client
@@ -25,7 +26,7 @@ def loop_list(common_client, proxy=None):
                 if (a := int(input_from_user)) > 0 and a <= len(template_ids):
                     set_template(common_client, template_ids[a - 1], proxy)
                 else:
-                    print('Wrong index, please input right index from the list.')
+                    logging.info('Wrong index, please input right index from the list.')
         elif input_from_user == 'l' or input_from_user == 'L':
             list_template(common_client)
         elif input_from_user == 'q' or input_from_user == 'Q':
@@ -33,12 +34,26 @@ def loop_list(common_client, proxy=None):
         elif input_from_user == '':
             continue
         else:
-            print('Input error.')
+            logging.info('Input error.')
 
-def main():
-    tencent, alibaba, action, target, target_id, proxy = arg.init_arg()
-    # print(tencent, alibaba, action, target, target_id, proxy)
+def set_log(verbose=0):
+    # FMT = '%(asctime)s %(process)d %(filename)s L%(lineno)s %(levelname)s %(message)s'
+    FMT = '%(asctime)s - %(process)d - %(filename)s - L%(lineno)s - %(levelname)s - %(message)s'
     
+    if verbose == 0:
+        logging.basicConfig(level=logging.WARN, format=FMT)
+    elif verbose == 1:
+        logging.basicConfig(level=logging.INFO, format=FMT)
+    elif verbose >=2:
+        logging.basicConfig(level=logging.DEBUG, format=FMT)
+    else:
+        print("Wrong position in set_log.")
+        
+def main():
+    tencent, alibaba, action, target, target_id, proxy, verbose = arg.init_arg()
+
+    set_log(verbose)
+
     common_client = client.get_common_client(proxy)
     
     if tencent and target == 'template':
@@ -49,7 +64,7 @@ def main():
         elif action == 'create':
             create_template(common_client, target_id, proxy)
         else:
-            print('Wrong postion, shall not be here.')
+            logging.error('Wrong postion, shall not be here.')
 
 
 if __name__ == '__main__':

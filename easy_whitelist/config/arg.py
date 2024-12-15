@@ -10,6 +10,7 @@ def init_arg():
     my_group.add_argument('-a', '-A', '--alibaba', action='store_true', help='alibaba cloud')
     
     parser.add_argument('-p', '-P', '--proxy',  action='store', default=None, type=int, help ='local HTTP proxy port')
+    parser.add_argument('-v', '--verbose', action='count', default=0)
     
     parser.add_argument('target', help='template or rule_id', choices=['template', 'rule_id'])
     parser.add_argument('action', help='list', choices=['list', 'set', 'create'])
@@ -17,6 +18,4 @@ def init_arg():
 
     args = parser.parse_args()
     
-    # print(args)
-    
-    return args.tencent, args.alibaba, args.action, args.target, args.target_id, args.proxy
+    return args.tencent, args.alibaba, args.action, args.target, args.target_id, args.proxy, args.verbose

@@ -1,6 +1,7 @@
 import json
 import random
 import sys
+import logging
 
 from ..ip import ip
 from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentCloudSDKException
@@ -110,11 +111,11 @@ def set_template(common_client, target_id, proxy=None):
         if target_id.startswith('ipm-'):
             addresses_extra = get_local_ip_and_format_addressesextra(proxy)
             if modify_template_address(common_client, addresses_extra, target_id):
-                print(f'Successfully set {{{target_id}}} to {{{addresses_extra}}}')
+                logging.info(f'Successfully set {{{target_id}}} to {{{addresses_extra}}}')
         else:
-            print('Wrong template id.')
+            logging.warning('Wrong template id.')
     else:
-        print('Set template shall input template id.')
+        logging.error('Set template shall input template id.')
 
 def create_template(common_client, rule_id, proxy=None):
     
