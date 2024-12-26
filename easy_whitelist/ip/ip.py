@@ -29,7 +29,7 @@ def get_local_ip_from_url_and_parse(u, patt, ag, proxy=None):
         return l_ip
     except Exception as e:
         logging.error(e)
-        sys.exit(1)
+        return None
 
 def validate_ip(l_ip):
     if not l_ip:
@@ -49,7 +49,7 @@ def get_local_ips(proxy=None):
     ip_list = []
     for i, u in enumerate(url.detect_url, 1):
         l_ip = get_local_ip_from_url_and_parse(u[0], u[1], u[2], proxy)
-        if validate_ip(l_ip):
+        if l_ip and validate_ip(l_ip):
             ip_list.append(l_ip)
     return ip_list
 
