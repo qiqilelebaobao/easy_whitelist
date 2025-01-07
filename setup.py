@@ -3,6 +3,7 @@
 
 from setuptools import setup, find_packages
 
+# import easy_whitelist
 
 # ROOT = os.path.dirname(__file__)
 
@@ -17,7 +18,7 @@ setup(
     author='qiqilelebaobao',
     author_email='qiqilelebaobao@163.com',
     maintainer_email="qiqilelebaobao@163.com",
-    version = '1.0.32',
+    # version=easy_whitelist.__version__,
     url='https://github.com/qiqilelebaobao/easy_whitelist',
     scripts=[],
     license="Apache License 2.0",
