@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
+# import os
 
-import os
 from setuptools import setup, find_packages
 
-import easy_whitelist
 
 # ROOT = os.path.dirname(__file__)
 
@@ -18,7 +17,7 @@ setup(
     author='qiqilelebaobao',
     author_email='qiqilelebaobao@163.com',
     maintainer_email="qiqilelebaobao@163.com",
-    version=easy_whitelist.__version__,
+    version = '1.0.32',
     url='https://github.com/qiqilelebaobao/easy_whitelist',
     scripts=[],
     license="Apache License 2.0",
