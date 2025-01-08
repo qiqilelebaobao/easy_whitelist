@@ -18,6 +18,7 @@ setup(
     author='qiqilelebaobao',
     author_email='qiqilelebaobao@163.com',
     maintainer_email="qiqilelebaobao@163.com",
+    version='1.0.34',
     # version=easy_whitelist.__version__,
     url='https://github.com/qiqilelebaobao/easy_whitelist',
     scripts=[],
