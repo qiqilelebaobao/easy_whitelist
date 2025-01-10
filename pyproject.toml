@@ -38,9 +38,11 @@ keywords = ["automation", "whitelist", "acl",
 "security-groups", "alibaba-cloud", "tencent-cloud", 
 "security-tools", "security-group-rule"]
 
-description = 'Easy_whitelist is a smart tool that detects the local Internet IP address and automatically updates the local Internet IP address to the cloud security group whitelist. The tool is written in Python.'
+# description = 'Easy_whitelist is a smart tool that detects the local Internet IP address and automatically updates the local Internet IP address to the cloud security group whitelist. The tool is written in Python.'
 
-version = '1.0.33'
+# version = '1.0.33'
+
+dynamic = ["version", "description"]
 
 [project.urls]
 Homepage = "https://github.com/qiqilelebaobao/easy_whitelist"
