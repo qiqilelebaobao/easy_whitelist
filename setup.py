@@ -24,7 +24,7 @@ setup(
     scripts=[],
     license="Apache License 2.0",
     platforms='any',
-    packages=find_packages(exclude=['output', 'sample']),
+    packages=find_packages(exclude=[]),
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
