@@ -46,6 +46,7 @@ dynamic = ["version", "description"]
 
 [project.urls]
 Homepage = "https://github.com/qiqilelebaobao/easy_whitelist"
+SelfDefined = "https://github.com/qiqilelebaobao/easy_whitelist"
 
 [project.scripts]
 easy = "easy_whitelist.__main__:main"
