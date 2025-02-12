@@ -3,7 +3,7 @@ import random
 import sys
 import logging
 
-from ip import ip
+from easy_whitelist.ip import ip
 from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentCloudSDKException
 
 
