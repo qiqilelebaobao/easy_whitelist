@@ -8,9 +8,9 @@ import string
 import sys
 import logging
 
-from easy_whitelist.config import arg
-from easy_whitelist.tcloud import client
-from easy_whitelist.tcloud.template import list_template, set_template, create_template
+from config import arg
+from tcloud import client
+from tcloud.template import list_template, set_template, create_template
 
 
 def loop_list(common_client, proxy=None):
