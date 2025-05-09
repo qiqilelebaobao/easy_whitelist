@@ -7,11 +7,15 @@ import logging
 
 from . import url
 
-def get_local_ip_from_url_and_parse(u, patt, ag, proxy=None):
+def get_local_ip_from_url_and_parse(u, patt, ag, if_enable, proxy=None):
     # 发送GET请求
     headers = {'user-agent': ag}
+    
+    if not re.search('enable', if_enable, re.IGNORECASE):
+        return None
+
     try:
-        logging.info(f'Starting fetch local ip from {u} with proxy {proxy}')
+        logging.info(f'Starting fetch local ip from {u} with proxy "{proxy}"')
 
         if proxy:
             response = requests.get(u, headers=headers, timeout=(3,5),
@@ -20,7 +24,7 @@ def get_local_ip_from_url_and_parse(u, patt, ag, proxy=None):
                                             })
         else:
             response = requests.get(u, headers=headers, timeout=(3, 5))
-            
+
         # 获取响应内容
         respon = response.text
         l_ip = url.parse_ip_from_response(respon, patt)
@@ -48,7 +52,7 @@ def validate_ip(l_ip):
 def get_local_ips(proxy=None):
     ip_list = []
     for i, u in enumerate(url.detect_url, 1):
-        l_ip = get_local_ip_from_url_and_parse(u[0], u[1], u[2], proxy)
+        l_ip = get_local_ip_from_url_and_parse(u[0], u[1], u[2], u[3], proxy)
         if l_ip and validate_ip(l_ip):
             ip_list.append(l_ip)
     return ip_list
