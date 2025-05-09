@@ -111,7 +111,9 @@ def set_template(common_client, target_id, proxy=None):
         if target_id.startswith('ipm-'):
             addresses_extra = get_local_ip_and_format_addressesextra(proxy)
             if modify_template_address(common_client, addresses_extra, target_id):
-                logging.info(f'Successfully set {{{target_id}}} to {{{addresses_extra}}}')
+                # logging.info(f'Successfully set {{{target_id}}} to {{{addresses_extra}}}')
+                # print(f'Successfully set ({target_id}) to ({addresses_extra})')
+                print(f'成功将IP模版：{target_id} 设置为：({addresses_extra})')
         else:
             logging.warning('Wrong template id.')
     else:
