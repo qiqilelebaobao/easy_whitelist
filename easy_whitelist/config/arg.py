@@ -12,7 +12,7 @@ def init_arg():
     parser.add_argument('-p', '-P', '--proxy',  action='store', default=None, type=int, help ='local HTTP proxy port')
     parser.add_argument('-v', '--verbose', action='count', default=0)
     
-    parser.add_argument('target', help='template or rule_id', choices=['template', 'rule_id'])
+    parser.add_argument('target', help='template or rule', choices=['template', 'rule'])
     parser.add_argument('action', help='list', choices=['list', 'set', 'create'])
     parser.add_argument('target_id', help='template id or rule id', nargs='?')
 
