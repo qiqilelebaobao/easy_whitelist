@@ -5,11 +5,13 @@ Easy_whitelist 是一个探测本机互联网 IP 地址，将并本机互联网I
 Easy_whitelist is a smart tool that detects the local Internet IP address and automatically updates the local Internet IP address to the cloud security group whitelist. The tool is written in Python.
 
 主要功能包括：
+
 * 自动探测本机互联网 IP 地址
 * 支持阿里云、腾讯云的安全组白名单更新
 * 腾讯云支持地址模板更新
 
 Main functions include:
+
 * Automatically detect the local Internet IP address
 * Support security group whitelist updates for Alibaba Cloud and Tencent Cloud
 * Tencent Cloud supports address template updates
@@ -32,11 +34,13 @@ Python3 is required
 ## 使用说明 Basic Usage
 
 * 通过列表选择模版，设置白名单
+
 ```shell
-$ easy template list
+easy template list
 ```
 
 * 通过新创建模版，设置白名单。需要指定关联的安全组ID
+
 ```shell
-$ easy template create rule_id
+easy template create rule_id
 ```
