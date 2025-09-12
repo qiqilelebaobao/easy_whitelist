@@ -9,7 +9,7 @@
 .venv/
 dist/
 build/
-## *.egg-info
+*.egg-info/
 **/__pycache__/
 
 #note
