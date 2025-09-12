@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "easy_whitelist"
-version = '1.0.56'
-description = 'Easy_whitelist is a smart tool that detects the local Internet IP address and automatically updates the local Internet IP address to the cloud security group whitelist. The tool is written in Python.'
+version = '1.0.57'
+description = 'A smart tool that detects the local Internet IP address and automatically updates the local Internet IP address to the cloud security group whitelist.'
 
 authors = [
   {name = "qiqilelebaobao"},
@@ -19,7 +19,8 @@ requires-python = ">= 3.6"
 readme = "README.md"
 keywords = ["whitelist", "security-groups", "alibaba-cloud", "tencent-cloud", "security-tools"]
 
-license = { file = "LICENSE" }
+# license = { file = "LICENSE" }
+license = {text = "Apache-2.0" }
 
 classifiers = [
   "License :: OSI Approved :: Apache Software License",
@@ -62,3 +63,7 @@ include = [
     "CODE_OF_CONDUCT.md",
     "tests/"
 ]
+
+[tool.setuptools]
+# 只取前 200 字符当摘要
+# license-files = []
