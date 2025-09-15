@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "easy_whitelist"
-version = '1.0.83'
+version = "1.0.84"
 description = 'A smart tool that detects the local Internet IP address and automatically updates the local Internet IP address to the cloud security group whitelist.'
 
 authors = [
@@ -14,26 +14,28 @@ maintainers = [
   {name = "qiqilelebaobao", email = "qiqilelebaobao@163.com"}
 ]
 
-requires-python = ">= 3.6"
+requires-python = ">= 3.8"
 readme = "README.md"
 keywords = ["whitelist", "security-groups", "alibaba-cloud", "tencent-cloud", "security-tools"]
 
-# license = { file = "LICENSE" }
-license = "Apache-2.0"
-license-files = ["LICENSE"]
+license = {text = "Apache-2.0"}
+# license-files = ["LICENSE"]
+# license = "Apache-2.0"
+# license-files = ["LICENSE"]
 
 classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.6",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
-  "Programming Language :: Python :: 3.14"
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+  "Topic :: Security",
+  "Topic :: System :: Networking",
+  "Intended Audience :: System Administrators"
   ]
 
 dependencies = [
@@ -57,8 +59,8 @@ cli = [
 ]
 
 dev = ["orjson"]
-test = ["simplejson"]
-doc = ["ujson"]
+test = ["pytest", "simplejson"]
+doc = ["sphinx", "ujson"]
 
 [tool.flit.sdist]
 include = [
@@ -66,7 +68,3 @@ include = [
     "CODE_OF_CONDUCT.md",
     "tests/"
 ]
-
-[tool.setuptools]
-# 只取前 200 字符当摘要
-# license-files = []
