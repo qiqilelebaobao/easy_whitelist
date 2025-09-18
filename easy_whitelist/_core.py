@@ -13,10 +13,14 @@ class CommandAction(Enum):
     NOTHING = 2
 
 
+CMD_LIST = 'l'
+CMD_EMPTY = ''
+CMD_CREATE = 'c'
+CMD_EXIT = 'q'
 INPUT_PROMPT = 'Please choose # template to set (or [L]ist, [C]reate, [Q]uit): '
 
 
-def _handle_digit_input(user_input: str, common_client, template_ids: list, proxy: None | str) -> None:
+def _handle_digit_input(user_input: str, common_client, template_ids: list, proxy: str | None) -> None:
     """
     处理数字输入，选择模板索引
 
@@ -39,7 +43,8 @@ def _handle_digit_input(user_input: str, common_client, template_ids: list, prox
             logging.warning(
                 'Index out of range. Available templates: %d', len(template_ids))
     except ValueError:
-        logging.warning("Invalid number: %s", user_input)
+        logging.warning("Invalid number: %s. Please enter a number between 1 and %d",
+                        user_input, len(template_ids))
 
 
 def _handle_command_input(user_input: str, common_client, template_ids: list, proxy: None | str) -> CommandAction:
@@ -57,10 +62,10 @@ def _handle_command_input(user_input: str, common_client, template_ids: list, pr
     """
 
     command_handlers = {
-        'l': (lambda: list_template(common_client), CommandAction.CONTINUE),
-        '': (lambda: None, CommandAction.CONTINUE),
-        'c': (lambda: None, CommandAction.CONTINUE),
-        'q': (lambda: None, CommandAction.BREAK),
+        CMD_LIST: (lambda: list_template(common_client), CommandAction.CONTINUE),
+        CMD_EMPTY: (lambda: None, CommandAction.CONTINUE),
+        CMD_CREATE: (lambda: None, CommandAction.CONTINUE),
+        CMD_EXIT: (lambda: None, CommandAction.BREAK),
         # 'c': lambda: create_template(common_client, proxy) # 假设有create_template函数
         # 可轻松扩展其他命令，例如 'h': show_help
     }
@@ -71,7 +76,7 @@ def _handle_command_input(user_input: str, common_client, template_ids: list, pr
         return action
     else:
         logging.warning(
-            'Invalid command: %s. Available commands: l, c, q', user_input)
+            f"Invalid command: {user_input}. Available commands: l, c, q")
         return CommandAction.CONTINUE
 
 
