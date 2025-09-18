@@ -79,34 +79,23 @@ def print_template(common_client) -> List[str]:
     return template_ids
 
 
-def _format_addres_extra_string_from_list(client_ips):
-    cs = '"AddressesExtra":['
-    for client_ip in client_ips:
-        cs += '{{"Address":"{}","Description":"client_ip"}},'.format(client_ip)
-    cs_format = cs.rstrip(',')
-    cs_format += ']'
-
-    return cs_format
-
-
-def _get_local_ip_and_format_addressesextra(proxy=None):
+def _get_iplist(proxy=None):
     client_ip_list = detectors.get_local_ips(proxy)
     client_ip_list = list(set(client_ip_list))
-    addresses_extra = _format_addres_extra_string_from_list(client_ip_list)
 
-    return addresses_extra
+    return client_ip_list
 
 
-def _modify_template_address(common_client, client_ips, target_id):
+def _modify_template_address(common_client, target_id, client_ips):
 
     if not target_id:
         return False
 
     # 增加描述校验，避免更改错误
-    params = f"{{\"Filters\":[{{\"Name\":\"address-template-id\",\"Values\":[\"{target_id}\"]}}]}}"
+    params = {"Filters": [
+        {"Name": "address-template-id", "Values": [target_id]}]}
     try:
-        respon = common_client.call_json(
-            "DescribeAddressTemplates", json.loads(params))
+        respon = common_client.call_json("DescribeAddressTemplates", params)
         if (TemplateSet := respon['Response']['AddressTemplateSet']) and \
                 TemplateSet[0]['AddressTemplateName'].startswith(TEMPLATE_PREFIX):
             # print(respon)
@@ -120,13 +109,14 @@ def _modify_template_address(common_client, client_ips, target_id):
         print(f"{err=}, {type(err)=}")
         sys.exit(1)
 
-    params = "{{\"AddressTemplateId\":\"{}\",{}}}".format(
-        target_id, client_ips)
+    params = {"AddressTemplateId": target_id,
+              "AddressesExtra": [{"Address": ip, "Description": "client_ip"} for ip in client_ips]
+              }
+
     try:
         respon = common_client.call_json(
-            "ModifyAddressTemplateAttribute", json.loads(params))
-        # print(respon)
-        # print('-' * 100)
+            "ModifyAddressTemplateAttribute", params)
+
     except TencentCloudSDKException as err:
         print(f"Unexpected {err=}, {type(err)=}")
         return False
@@ -140,11 +130,9 @@ def set_template(common_client, target_id, proxy=None):
     #     print(data)
     if target_id:
         if target_id.startswith('ipm-'):
-            addresses_extra = _get_local_ip_and_format_addressesextra(proxy)
-            if _modify_template_address(common_client, addresses_extra, target_id):
-                # logging.info(f'Successfully set {{{target_id}}} to {{{addresses_extra}}}')
-                # print(f'Successfully set ({target_id}) to ({addresses_extra})')
-                print(f"✅ [成功] 模板 {target_id} 已更新 -> {addresses_extra}")
+            client_iplist = _get_iplist(proxy)
+            if _modify_template_address(common_client, target_id, client_iplist):
+                print(f"✅ [成功] 模板 {target_id} 已更新 -> {client_iplist}")
         else:
             logging.warning('Wrong template id.')
     else:
@@ -157,12 +145,10 @@ def create_template(common_client, rule_id, proxy=None):
         print('Create template shall input security group id.')
         return False
 
-    params = "{}"
     try:
         templates = []
-        respon = common_client.call_json(
-            "DescribeAddressTemplates", json.loads(params))
-        print(json.dumps(respon, ensure_ascii=False))
+        respon = common_client.call_json("DescribeAddressTemplates", {})
+        logging.info(json.dumps(respon, ensure_ascii=False))
         for template in respon['Response']['AddressTemplateSet']:
             if template['AddressTemplateName'].startswith(TEMPLATE_PREFIX):
                 templates.append(
@@ -175,17 +161,28 @@ def create_template(common_client, rule_id, proxy=None):
         print(f"{err=}, {type(err)=}")
         return False
 
-    addresses_extra = _get_local_ip_and_format_addressesextra(proxy)
-    params = f"{{\"AddressTemplateName\":\"{TEMPLATE_PREFIX}{random.randint(1, 9999):04d}\",{addresses_extra}}}"
+    ip_list = _get_iplist(proxy)
+    random_suffix = random.randint(1, 9999)
+    params = {
+        "AddressTemplateName": f"{TEMPLATE_PREFIX}{random_suffix:04d}",
+        "AddressesExtra": [{"Address": ip, "Description": "client_ip"} for ip in ip_list]
+    }
+
     try:
         respon = common_client.call_json(
-            "CreateAddressTemplate", json.loads(params))
+            "CreateAddressTemplate", params
+        )
         print(json.dumps(respon, ensure_ascii=False))
 
         if template_id := respon['Response']['AddressTemplate']['AddressTemplateId']:
-            params = f"{{\"SecurityGroupId\":\"{rule_id}\",\"SecurityGroupPolicySet\":{{\"Ingress\":[{{\"PolicyIndex\":0,\"Protocol\":\"ALL\",\"AddressTemplate\":{{\"AddressId\":\"{template_id}\"}},\"Action\":\"accept\",\"PolicyDescription\":\"temp-open\"}}]}}}}"
+
+            params = {"SecurityGroupId": f'{rule_id}',
+                      "SecurityGroupPolicySet": {"Ingress": [{"PolicyIndex": 0, "Protocol": "ALL", "AddressTemplate": {"AddressId": f'{template_id}'}, "Action": "ACCEPT", "PolicyDescription": "easy-whitelist"}]}
+                      }
+
             respon = common_client.call_json(
-                "CreateSecurityGroupPolicies", json.loads(params))
+                "CreateSecurityGroupPolicies", params
+            )
             print(json.dumps(respon))
 
     except TencentCloudSDKException as err:
