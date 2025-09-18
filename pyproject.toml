@@ -48,7 +48,7 @@ Homepage = "https://github.com/qiqilelebaobao/easy_whitelist"
 Source = "https://github.com/qiqilelebaobao/easy_whitelist"
 
 [project.scripts]
-easy = "easy_whitelist.__main__:main"
+easy = "easy_whitelist._core:main"
 
 [project.optional-dependencies]
 gui = ["PyQt5"]
