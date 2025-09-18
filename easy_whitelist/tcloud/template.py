@@ -3,7 +3,7 @@ import random
 import sys
 import logging
 
-from easy_whitelist.ip import ip
+from ..ip_detector import detectors
 from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentCloudSDKException
 
 
@@ -96,7 +96,7 @@ def modify_template_address(common_client, client_ips, target_id):
     return True
 
 def get_local_ip_and_format_addressesextra(proxy=None):
-        client_ip_list = ip.get_local_ips(proxy)
+        client_ip_list = detectors.get_local_ips(proxy)
         # ip.print_ip_list(client_ip_list)
         client_ip_list = list(set(client_ip_list))
         addresses_extra = format_addres_extra_string_from_list(client_ip_list)

@@ -1,11 +1,8 @@
 import requests
-import sys
-import random
 import re
-import time
 import logging 
 
-from . import url
+from . import utils
 
 def get_local_ip_from_url_and_parse(u, patt, ag, if_enable, proxy=None):
     # 发送GET请求
@@ -27,7 +24,7 @@ def get_local_ip_from_url_and_parse(u, patt, ag, if_enable, proxy=None):
 
         # 获取响应内容
         respon = response.text
-        l_ip = url.parse_ip_from_response(respon, patt)
+        l_ip = utils.parse_ip_from_response(respon, patt)
         logging.info(f'Ending fetch local ip from {u} with ip {l_ip}')
 
         return l_ip
@@ -51,7 +48,7 @@ def validate_ip(l_ip):
 
 def get_local_ips(proxy=None):
     ip_list = []
-    for i, u in enumerate(url.detect_url, 1):
+    for i, u in enumerate(utils.detect_url, 1):
         l_ip = get_local_ip_from_url_and_parse(u[0], u[1], u[2], u[3], proxy)
         if l_ip and validate_ip(l_ip):
             ip_list.append(l_ip)

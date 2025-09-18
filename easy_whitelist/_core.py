@@ -1,9 +1,8 @@
 import logging
 
 from .config import arg
-from .log.log import set_log
+from .config.log import set_log
 from .tcloud.core import t_main
-
 
 
 def main() -> None:
