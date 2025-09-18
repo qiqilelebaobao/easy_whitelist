@@ -3,7 +3,7 @@ import argparse
 def init_arg():
     '''parse parameter from command line.'''
     
-    parser = argparse.ArgumentParser(prog='easy', description='This is a cloud acl auto whitelist tool.', epilog='Enjoy the tool. :) ')
+    parser = argparse.ArgumentParser(prog='ew', description='This is a cloud acl auto whitelist tool.', epilog='Enjoy the tool. :) ')
 
     my_group = parser.add_mutually_exclusive_group(required=False)
     my_group.add_argument('-t', '-T', '--tencent', action='store_true', default=True, help='tencent cloud')
