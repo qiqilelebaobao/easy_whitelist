@@ -38,7 +38,8 @@ classifiers = [
   ]
 
 dependencies = [
-  "tencentcloud-sdk-python",
+  "requests",
+  "tencentcloud-sdk-python"
 ]
 
 # dynamic = ["version", "description"]

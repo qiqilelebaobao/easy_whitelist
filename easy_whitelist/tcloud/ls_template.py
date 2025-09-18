@@ -2,7 +2,7 @@ import logging
 from enum import Enum, auto
 from typing import Optional
 
-from .template import list_template, set_template
+from .template import print_template, set_template
 
 class CommandAction(Enum):
     CONTINUE = auto()
@@ -59,7 +59,7 @@ def _handle_command_input(user_input: str, common_client, template_ids: list, pr
     """
 
     command_handlers = {
-        CMD_LIST: (lambda: list_template(common_client), CommandAction.CONTINUE),
+        CMD_LIST: (lambda: print_template(common_client), CommandAction.CONTINUE),
         CMD_EMPTY: (lambda: None, CommandAction.CONTINUE),
         CMD_CREATE: (lambda: None, CommandAction.CONTINUE),
         CMD_EXIT: (lambda: None, CommandAction.BREAK),
@@ -78,7 +78,7 @@ def _handle_command_input(user_input: str, common_client, template_ids: list, pr
 
 
 def loop_list(common_client, proxy: Optional[str] = None) -> None:
-    template_ids = list_template(common_client)
+    template_ids = print_template(common_client)
     last_input = None
 
     while True:
