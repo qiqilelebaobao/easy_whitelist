@@ -25,12 +25,12 @@ COLS = {
 
 def _get_template(common_client) -> Optional[dict]:
     try:
-        params = {}
         # templates = common_client.call_json("DescribeAddressTemplates", params, options = {'SkipSign': True})
-        return common_client.call_json("DescribeAddressTemplates", params, )
+        return common_client.call_json("DescribeAddressTemplates", {})
 
     except TencentCloudSDKException as e:
-        logging.error("DescribeAddressTemplates failed: %s", e)
+        logging.error(
+            "[DescribeAddressTemplates] failed, type [%s]: %s", type(e).__name__, e)
         return None
 
 
