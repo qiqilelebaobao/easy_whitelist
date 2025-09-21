@@ -7,12 +7,13 @@ from .tcloud.core import t_main
 
 def main() -> None:
 
-    tencent, alibaba, action, target, target_id, proxy, verbose = arg.init_arg()
+    # tencent, alibaba, action, target, target_id, proxy, verbose = arg.init_arg()
+    args = arg.init_arg()
 
-    set_log(verbose)
+    set_log(args.verbose)
 
-    cloud_provider = 'tencent' if tencent else 'aliyun'
+    cloud_provider = 'tencent' if args.tencent else 'aliyun'
     logging.info('Using %s cloud provider', cloud_provider.upper())
 
     if cloud_provider == 'tencent':
-        t_main(action, target, target_id, proxy)
+        t_main(args.action, args.target, args.target_id,args.proxy)
