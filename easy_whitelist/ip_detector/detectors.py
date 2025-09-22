@@ -16,10 +16,7 @@ def get_local_ip_from_url_and_parse(u, patt, ag, if_enable, proxy=None):
         logging.info(f'[ip.detect] Starting fetch local ip from {u} with proxy "{proxy}"')
 
         if proxy:
-            response = requests.get(u, headers=headers, timeout=(3, 5),
-                                    proxies={"http": f"http://127.0.0.1:{proxy}",
-                                             "https": f"http://127.0.0.1:{proxy}"
-                                             })
+            response = requests.get(u, headers=headers, timeout=(3, 5), proxies={"http": f"http://127.0.0.1:{proxy}", "https": f"http://127.0.0.1:{proxy}"})
         else:
             response = requests.get(u, headers=headers, timeout=(3, 5))
 
@@ -30,7 +27,7 @@ def get_local_ip_from_url_and_parse(u, patt, ag, if_enable, proxy=None):
 
         return l_ip
     except Exception as e:
-        logging.error(e)
+        logging.error("[detector] parse failed, reason=exception, detail=%s", e)
         return None
 
 

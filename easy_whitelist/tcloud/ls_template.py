@@ -30,7 +30,7 @@ def _handle_digit_input(user_input: str, common_client, template_ids: list, prox
     """
 
     if not template_ids:
-        logging.warning("No templates available. Please create one first.")
+        logging.warning("[template] no template available, reason=no template, hint=create one first")
         return
 
     try:
@@ -38,11 +38,9 @@ def _handle_digit_input(user_input: str, common_client, template_ids: list, prox
         if 1 <= index <= len(template_ids):
             set_template(common_client, template_ids[index - 1], proxy)
         else:
-            logging.warning(
-                'Index out of range. Available templates: %d', len(template_ids))
+            logging.warning("[template] select failed, reason=index out of range, hint=available 1~%d", len(template_ids))
     except ValueError:
-        logging.warning("Invalid number: %s. Please enter a number between 1 and %d",
-                        user_input, len(template_ids))
+        logging.warning("[template] select failed, reason=invalid number '%s', hint=1~%d", user_input, len(template_ids))
 
 
 def _handle_command_input(user_input: str, common_client, template_ids: list, proxy: Optional[str]) -> CommandAction:
@@ -73,8 +71,7 @@ def _handle_command_input(user_input: str, common_client, template_ids: list, pr
         handler()
         return action
     else:
-        logging.warning(
-            f"Invalid command: {user_input}. Available commands: l, c, q")
+        logging.warning("[cli] command failed, reason=invalid command '%s', hint=l/c/q", user_input)
         return CommandAction.CONTINUE
 
 
@@ -102,13 +99,13 @@ def loop_list(common_client, proxy: Optional[str] = None) -> None:
                     break
 
         except KeyboardInterrupt:
-            logging.warning('\nOperation cancelled by user')
+            logging.warning("[cli] operation cancelled, reason=user interrupt, hint=none")
             break
         except ValueError as e:
-            logging.warning("Value error: %s", e)
+            logging.warning("[cli] input failed, reason=value error '%s', hint=retry", e)
         except ConnectionError as e:
-            logging.error("Connection error: %s", e)
+            logging.error("[http] connection failed, reason=connection error, detail=%s", e)
             break
         except Exception as e:
-            logging.error("Unexpected error occurred: %s", e)
+            logging.error("[http] request failed, reason=unexpected, detail=%s", e)
             break
