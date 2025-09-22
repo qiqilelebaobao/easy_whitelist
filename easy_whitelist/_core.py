@@ -11,8 +11,9 @@ def main() -> None:
     args = arg.init_arg()
 
     set_log(args.verbose)
+    logging.info(f'Arg info:{args}')
 
-    cloud_provider = 'tencent' if args.tencent else 'aliyun'
+    cloud_provider = args.cloud
     logging.info('Using %s cloud provider', cloud_provider.upper())
 
     if cloud_provider == 'tencent':

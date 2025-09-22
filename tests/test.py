@@ -1,26 +1,17 @@
-def _format_addres_extra_string_from_list(client_ips):
-    cs = '"AddressesExtra":['
-    for client_ip in client_ips:
-        cs += '{{"Address":"{}","Description":"client_ip"}},'.format(client_ip)
-    cs_format = cs.rstrip(',')
-    cs_format += ']'
 
-    return cs_format
+def level3():
+    print("进入 level3")
+    1 / 0  # 抛出 ZeroDivisionError
+    print("不会执行到这里")
 
-import json
+def level2():
+    print("进入 level2")
+    level3()
+    print("level2 后续代码不会执行")
 
-def _format_addres_extra_string_from_list2(client_ips):
-    return json.dumps({
-        "AddressesExtra": [
-            {"Address": ip, "Description": "client_ip"}
-            for ip in client_ips
-        ]
-    })
+def level1():
+    print("进入 level1")
+    level2()
+    print("level1 后续代码不会执行")
 
-print(_format_addres_extra_string_from_list(['1.1.1.1', '1.2.3.4']))
-print(_format_addres_extra_string_from_list2(['1.1.1.1', '1.2.3.4']))
-
-print([{"aaa": x} for x in range(10)])
-
-
-print(json.dumps({"a":1, "b":333}))
+level1()
