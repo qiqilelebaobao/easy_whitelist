@@ -13,7 +13,7 @@ def get_local_ip_from_url_and_parse(u, patt, ag, if_enable, proxy=None):
         return None
 
     try:
-        logging.info(f'Starting fetch local ip from {u} with proxy "{proxy}"')
+        logging.info(f'[ip.detect] Starting fetch local ip from {u} with proxy "{proxy}"')
 
         if proxy:
             response = requests.get(u, headers=headers, timeout=(3, 5),
@@ -26,7 +26,7 @@ def get_local_ip_from_url_and_parse(u, patt, ag, if_enable, proxy=None):
         # 获取响应内容
         respon = response.text
         l_ip = utils.parse_ip_from_response(respon, patt)
-        logging.info(f'Ending fetch local ip from {u} with ip {l_ip}')
+        logging.info(f'[ip.detect] finish fetch local ip from {u} with ip {l_ip}')
 
         return l_ip
     except Exception as e:
@@ -60,16 +60,16 @@ def get_local_ips(proxy=None):
 
 def print_ip_list(ip_list):
     number = 100
-    print(f'{"Detected Local IP List":=^{number}}\n'
-          f'{"#":<38}IP Address\n'
-          f'{"-" * number}'
-          )
+    logging.info(f'{"Detected Local IP List":=^{number}}\n'
+                 f'{"#":<38}IP Address\n'
+                 f'{"-" * number}'
+                 )
 
     for i, ip in enumerate(ip_list, 1):
-        print(f'{str(i):<38}{ip}')
+        logging.info(f'{str(i):<38}{ip}')
 
-    print('-' * number)
+    logging.info('-' * number)
 
 
 if __name__ == '__main__':
-    print(validate_ip('1.0.0.0'))
+    validate_ip('1.0.0.0')

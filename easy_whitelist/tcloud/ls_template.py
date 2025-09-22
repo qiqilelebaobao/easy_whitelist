@@ -4,6 +4,7 @@ from typing import Optional
 
 from .template import print_template, set_template
 
+
 class CommandAction(Enum):
     CONTINUE = auto()
     BREAK = auto()

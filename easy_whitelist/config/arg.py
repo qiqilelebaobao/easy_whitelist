@@ -37,6 +37,8 @@ def init_arg():
     parser.add_argument('-v', '--verbose', action='count', default=0)
 
     # 位置参数
+    parser.add_argument('-r', '--region', help='region or rule')
+
     parser.add_argument('target', help='template or rule',
                         choices=['template', 'rule'])
 
