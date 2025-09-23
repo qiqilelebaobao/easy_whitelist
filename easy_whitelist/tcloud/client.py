@@ -14,7 +14,7 @@ def get_common_client(proxy_port, region):
 
     if region is None:
         region = "ap-guangzhou"
-        logging.info("[config] region empty, fallback to %s", region)
+        logging.info("[config] region not set, fallback to %s", region)
 
     cred = credential.DefaultCredentialProvider().get_credential()
 

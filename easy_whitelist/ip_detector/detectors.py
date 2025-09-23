@@ -13,7 +13,7 @@ def get_local_ip_from_url_and_parse(u, patt, ag, if_enable, proxy=None):
         return None
 
     try:
-        logging.info(f'[ip.detect] Starting fetch local ip from {u} with proxy "{proxy}"')
+        logging.info("[ip.detect] fetching local IP, url=%s proxy=%s", u, proxy)
 
         if proxy:
             response = requests.get(u, headers=headers, timeout=(3, 5), proxies={"http": f"http://127.0.0.1:{proxy}", "https": f"http://127.0.0.1:{proxy}"})
@@ -23,11 +23,11 @@ def get_local_ip_from_url_and_parse(u, patt, ag, if_enable, proxy=None):
         # 获取响应内容
         respon = response.text
         l_ip = utils.parse_ip_from_response(respon, patt)
-        logging.info(f'[ip.detect] finish fetch local ip from {u} with ip {l_ip}')
+        logging.info("[ip.detect] fetched local IP, url=%s ip=%s", u, l_ip)
 
         return l_ip
     except Exception as e:
-        logging.error("[detector] parse failed, reason=exception, detail=%s", e)
+        logging.error("[ip.detect] parse failed, reason=exception, detail=%s", e)
         return None
 
 
@@ -57,16 +57,12 @@ def get_local_ips(proxy=None):
 
 def print_ip_list(ip_list):
     number = 100
-    logging.info(f'{"Detected Local IP List":=^{number}}\n'
-                 f'{"#":<38}IP Address\n'
-                 f'{"-" * number}'
-                 )
+    print(f'{"Detected Local IP List":=^{number}}\n'
+          f'{"#":<38}IP Address\n'
+          f'{"-" * number}'
+          )
 
     for i, ip in enumerate(ip_list, 1):
-        logging.info(f'{str(i):<38}{ip}')
+        print(f'{str(i):<38}{ip}')
 
-    logging.info('-' * number)
-
-
-if __name__ == '__main__':
-    validate_ip('1.0.0.0')
+    print('-' * number)

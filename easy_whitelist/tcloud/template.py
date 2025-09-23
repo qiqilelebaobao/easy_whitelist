@@ -30,7 +30,7 @@ def _get_template(common_client) -> Optional[dict]:
         return common_client.call_json("DescribeAddressTemplates", {})
 
     except TencentCloudSDKException as e:
-        logging.error("[DescribeAddressTemplates] failed, type [%s]: %s", type(e).__name__, e)
+        logging.error("[template] DescribeAddressTemplates failed, type [%s]: %s", type(e).__name__, e)
         return None
 
 
@@ -94,7 +94,7 @@ def _modify_template_address(common_client, target_id, client_ips):
             return False
     except (TencentCloudSDKException, IndexError) as err:
         # IndexError catch when there is no match target.Example: 'AddressTemplateSet': []
-        logging.error("[template] api failed, reason=exception, detail=%s", err)
+        logging.error("[template] api call failed, reason=exception, detail=%s", err)
         sys.exit(1)
 
     params = {"AddressTemplateId": target_id,
@@ -106,7 +106,7 @@ def _modify_template_address(common_client, target_id, client_ips):
             "ModifyAddressTemplateAttribute", params)
 
     except TencentCloudSDKException as err:
-        logging.error("[template] api failed, reason=exception, detail=%s", err)
+        logging.error("[template] api call failed, reason=exception, detail=%s", err)
         return False
 
     return True
@@ -122,22 +122,22 @@ def set_template(common_client, target_id, proxy=None):
         else:
             logging.warning("[template] set failed, reason=wrong template id '%s', hint=check prefix", target_id)
     else:
-        logging.error("[template] missing template_id, reason=empty input, detail=none")
+        logging.error("[template] missing template_id, reason=empty input")
 
 
 def create_template_and_associate(common_client, rule_id, proxy=None):
 
     if not rule_id:
-        logging.info('[template] missing security_group_id.')
+        logging.info("[template] security group ID required but missing")
         return False
     # check rule_id
     pass
 
     template_id = create_template(common_client, proxy)
-    logging.info(f'[template] Get template id {template_id}.')
+    logging.info("[template] template created/retrieved, ID=%s", template_id)
 
     if template_id is None:
-        logging.info('[template] create failed.')
+        logging.error("[template] template creation failed as template is is none.")
         return False
 
     return associate_template_2_rule(common_client, template_id, rule_id)
@@ -147,13 +147,13 @@ def create_template(common_client, proxy=None):
     try:
         templates = []
         respon = common_client.call_json("DescribeAddressTemplates", {})
-        logging.info(f'[template] api response: {json.dumps(respon, ensure_ascii=False)}')
+        logging.info("[template] API response, detail=%s", json.dumps(respon, ensure_ascii=False))
         for template in respon['Response']['AddressTemplateSet']:
             if template['AddressTemplateName'].startswith(TEMPLATE_PREFIX):
                 templates.append(
                     (template['AddressTemplateId'], template['AddressTemplateName'], template['CreatedTime']))
         if templates:
-            logging.error(f'[template] already have template without creation: {templates}')
+            logging.error("[template] already have template without creation: %s", templates)
             return templates[0][0]
 
         ip_list = _get_iplist(proxy)
@@ -164,7 +164,7 @@ def create_template(common_client, proxy=None):
         }
         respon = common_client.call_json("CreateAddressTemplate", params)
 
-        logging.info(f'[template] api response: {json.dumps(respon, ensure_ascii=False)}')
+        logging.info("[template] API response, detail=%s", json.dumps(respon, ensure_ascii=False))
 
     except TencentCloudSDKException as err:
         logging.error("[template] api failed, reason=exception, detail=%s", err)
@@ -187,7 +187,7 @@ def associate_template_2_rule(common_client, template_id, rule_id):
         respon = common_client.call_json(
             "CreateSecurityGroupPolicies", params
         )
-        logging.info(f'[template] api response: {json.dumps(respon, ensure_ascii=False)}')
+        logging.info("[template] API response, detail=%s", json.dumps(respon, ensure_ascii=False))
 
     except TencentCloudSDKException as err:
         logging.error("[template] api failed, reason=exception, detail=%s", err)
