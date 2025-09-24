@@ -7,9 +7,9 @@ from . import utils
 
 def get_local_ip_from_url_and_parse(u, patt, ag, if_enable, proxy=None):
     # 发送GET请求
-    headers = {'user-agent': ag}
+    headers = {"user-agent": ag}
 
-    if not re.search('enable', if_enable, re.IGNORECASE):
+    if not re.search("enable", if_enable, re.IGNORECASE):
         return None
 
     try:
@@ -35,11 +35,11 @@ def validate_ip(l_ip):
     if not l_ip:
         return False
 
-    # r'(?:(?:25[0-5]|2[0-4][0-9]|[1]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[1]?[0-9][0-9]?)'
-    # r'(?:\d{1,3}\.){3}\d{1,3}'
-    # r'((?:[1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:[1-9]?\d|1\d\d|2[0-4]\d|25[0-5])'
-    # r'(?<![\.\d])(?:25[0-5]\.|2[0-4]\d\.|[01]?\d\d?\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)(?![\.\d])'
-    pat = r'((?:[1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:[1-9]?\d|1\d\d|2[0-4]\d|25[0-5])'
+    # r"(?:(?:25[0-5]|2[0-4][0-9]|[1]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[1]?[0-9][0-9]?)"
+    # r"(?:\d{1,3}\.){3}\d{1,3}"
+    # r"((?:[1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:[1-9]?\d|1\d\d|2[0-4]\d|25[0-5])"
+    # r"(?<![\.\d])(?:25[0-5]\.|2[0-4]\d\.|[01]?\d\d?\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)(?![\.\d])"
+    pat = r"((?:[1-9]?\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(?:[1-9]?\d|1\d\d|2[0-4]\d|25[0-5])"
     if re.fullmatch(pat, l_ip):
         return True
     else:
@@ -57,12 +57,12 @@ def get_local_ips(proxy=None):
 
 def print_ip_list(ip_list):
     number = 100
-    print(f'{"Detected Local IP List":=^{number}}\n'
-          f'{"#":<38}IP Address\n'
-          f'{"-" * number}'
+    print(f"{"Detected Local IP List":=^{number}}\n"
+          f"{"#":<38}IP Address\n"
+          f"{"-" * number}"
           )
 
     for i, ip in enumerate(ip_list, 1):
-        print(f'{str(i):<38}{ip}')
+        print(f"{str(i):<38}{ip}")
 
-    print('-' * number)
+    print("-" * number)

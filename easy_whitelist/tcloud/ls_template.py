@@ -11,11 +11,11 @@ class CommandAction(Enum):
     NOTHING = auto()
 
 
-CMD_LIST = 'l'
-CMD_EMPTY = ''
-CMD_CREATE = 'c'
-CMD_EXIT = 'q'
-INPUT_PROMPT = 'Please choose # template to set (or [L]ist, [C]reate, [Q]uit): '
+CMD_LIST = "l"
+CMD_EMPTY = ""
+CMD_CREATE = "c"
+CMD_EXIT = "q"
+INPUT_PROMPT = "Please choose # template to set (or [L]ist, [C]reate, [Q]uit): "
 
 
 def _handle_digit_input(user_input: str, common_client, template_ids: list, proxy: Optional[str]) -> None:
@@ -40,7 +40,7 @@ def _handle_digit_input(user_input: str, common_client, template_ids: list, prox
         else:
             logging.warning("[template] select failed, reason=index out of range, hint=available 1~%d", len(template_ids))
     except ValueError:
-        logging.warning("[template] select failed, reason=invalid number '%s', hint=1~%d", user_input, len(template_ids))
+        logging.warning("[template] select failed, reason=invalid number %s, hint= %d", user_input, len(template_ids))
 
 
 def _handle_command_input(user_input: str, common_client, template_ids: list, proxy: Optional[str]) -> CommandAction:
@@ -62,8 +62,8 @@ def _handle_command_input(user_input: str, common_client, template_ids: list, pr
         CMD_EMPTY: (lambda: None, CommandAction.CONTINUE),
         CMD_CREATE: (lambda: None, CommandAction.CONTINUE),
         CMD_EXIT: (lambda: None, CommandAction.BREAK),
-        # 'c': lambda: create_template(common_client, proxy) # 假设有create_template函数
-        # 可轻松扩展其他命令，例如 'h': show_help
+        # "c": lambda: create_template(common_client, proxy) # 假设有create_template函数
+        # 可轻松扩展其他命令，例如 "h": show_help
     }
 
     if user_input in command_handlers:
@@ -71,7 +71,7 @@ def _handle_command_input(user_input: str, common_client, template_ids: list, pr
         handler()
         return action
     else:
-        logging.warning("[cli] command failed, reason=invalid command '%s', hint=l/c/q", user_input)
+        logging.warning("[cli] command failed, reason=invalid command %s, hint=l/c/q", user_input)
         return CommandAction.CONTINUE
 
 
@@ -84,7 +84,7 @@ def loop_list(common_client, proxy: Optional[str] = None) -> None:
         try:
             user_input = input(INPUT_PROMPT).strip().lower()
 
-            if last_input == '' and user_input == '':
+            if last_input == "" and user_input == "":
                 break
 
             last_input = user_input
@@ -101,11 +101,14 @@ def loop_list(common_client, proxy: Optional[str] = None) -> None:
         except KeyboardInterrupt:
             logging.warning("[cli] operation cancelled, reason=user interrupt, hint=none")
             break
+
         except ValueError as e:
-            logging.warning("[cli] input failed, reason=value error '%s', hint=retry", e)
+            logging.warning("[cli] input failed, reason=value error %s, hint=retry", e)
+
         except ConnectionError as e:
             logging.error("[http] connection failed, reason=connection error, detail=%s", e)
             break
+
         except Exception as e:
             logging.error("[http] request failed, reason=unexpected, detail=%s", e)
             break

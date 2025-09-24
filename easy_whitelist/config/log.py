@@ -1,6 +1,6 @@
 import logging
 
-LOG_FORMAT = '%(asctime)s-%(process)d-%(filename)s:%(lineno)d-%(levelname)s-%(message)s'
+LOG_FORMAT = "%(asctime)s-%(process)d-%(filename)s:%(lineno)d-%(levelname)s-%(message)s"
 
 
 def set_log(verbose: int = 0):
