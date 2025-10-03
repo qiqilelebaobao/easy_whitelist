@@ -13,5 +13,5 @@ build/
 **/__pycache__/
 
 #note
-note.md
+notes/
 tests/test.py
