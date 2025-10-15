@@ -1,11 +1,11 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages  # type: ignore
 
 with open("README.md", encoding="utf-8") as f:
     long_desc = f.read()
 
 setup(
     name="easy_whitelist",              # PyPI 上唯一的名字
-    version="1.0.100",                   # 每次上传必须 > 旧版本
+    version="1.0.103",                   # 每次上传必须 > 旧版本
     author="qiqilelebaobao",
     author_email="qiqilelebaobao@163.com",
     description="A smart tool that detects the local Internet IP address and automatically updates the local Internet IP address to the cloud security group whitelist.",
