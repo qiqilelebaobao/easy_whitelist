@@ -4,6 +4,7 @@
 #editor
 .vscode/
 *.code-workspace
+.flake8
 
 #python env
 .venv/
