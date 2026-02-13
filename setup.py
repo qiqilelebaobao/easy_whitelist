@@ -29,7 +29,7 @@ setup(
         "Intended Audience :: System Administrators"
     ],
     package_data={
-        "easy_whitelist": ["*.txt"],   # 键=包名，值=glob 列表
+        # "easy_whitelist": ["*.txt"],   # 键=包名，值=glob 列表
     },
     setup_requires=[
         "setuptools>=61.0",
@@ -37,7 +37,6 @@ setup(
         "Cython"
     ],
     install_requires=[
-        "requests",
         "tencentcloud-sdk-python"
     ],
     entry_points={
